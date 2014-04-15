@@ -57,22 +57,6 @@ module.exports = function(grunt) {
             } else {
                 grunt.log.write(result);
             }
-
-            // Compile scss file if include type is "scss".
-            if (opts.includeType === 'scss' && path.extname(opts.includePath) === '.scss') {
-                opts.scssRoot = opts.scssRoot.map(function(root) {
-                    return path.resolve(process.cwd() + '/' + root);
-                });
-
-                grunt.log.writeln('Scss includes compilation.');
-                grunt.log.writeln(opts.includePath + ' -> ' + dest.replace(/\/$/, '') + '/public/style.css');
-
-                grunt.file.write(
-                    dest.replace(/\/$/, '') + '/public/style.css',
-                    sass.compile(opts.includePath, opts.scssRoot, 'compressed'),
-                    {encoding: 'utf8'}
-                );
-            }
             done();
         };
 

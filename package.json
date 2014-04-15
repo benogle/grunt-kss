@@ -28,7 +28,6 @@
     },
     "dependencies": {
         "kss": "~0.3.7",
-        "node-sass": "~0.8.4"
     },
     "devDependencies": {
         "grunt-cli": "~0.1.13",
