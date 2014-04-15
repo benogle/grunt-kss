@@ -1,6 +1,6 @@
 # grunt-kss
 
-[![Build Status](https://secure.travis-ci.org/t32k/grunt-kss.png?branch=master)](http://travis-ci.org/t32k/grunt-kss) 
+[![Build Status](https://secure.travis-ci.org/t32k/grunt-kss.png?branch=master)](http://travis-ci.org/t32k/grunt-kss)
 [![NPM version](https://badge.fury.io/js/grunt-kss.png)](http://badge.fury.io/js/grunt-kss)
 [![Dependency Status](https://david-dm.org/t32k/grunt-kss.png)](https://david-dm.org/t32k/grunt-kss)
 
@@ -30,13 +30,17 @@ In your project's Gruntfile, add a section named `kss` to the data object passed
 grunt.initConfig({
   kss: {
     options: {
-      includeType: 'css',
-      includePath: '/path/to/include.css',
+      template: 'some/template/dir',
+      loadPath: ['path/to/includes/for/sass'],
+      include: {
+        js: ['path/to/js.js'],
+        sass: ['path/to/index.scss']
+      }
     },
     dist: {
-	    files: {
-	      '/path/to/destdir': ['/path/to/sourcedir']
-	    }
+	    files: [{
+	      '/path/to/destdir': '/path/to/sourcedir'
+	    }]
   	}
   }
 })
@@ -44,19 +48,26 @@ grunt.initConfig({
 
 ### Options
 
-#### options.includeType
+#### options.include
+Type: `Object`
+Default value: `null`
+
+Supports keys `style, less, stylus, sass, css, js, coffee`
+
+```js
+include: {
+  js: ['path/to/js.js'],
+  sass: ['path/to/index.scss']
+}
+```
+
+Will compile and  and include these files in your styleguide's pages.
+
+#### options.loadPath
 Type: `String`
 Default value: `null`
 
-`style, less, stylus, sass, css`
-
-A string value that is used to compile and include to build your style.
-
-#### options.includePath
-Type: `String`
-Default value: `null`
-
-A string value that is used to specify incluede stylesheet path.
+A string value that is used to specify include stylesheet path (for sass/scss).
 
 #### options.template
 Type: `String`
