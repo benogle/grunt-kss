@@ -27,7 +27,7 @@
         "test": "grunt test"
     },
     "dependencies": {
-        "kss": "~0.3.7",
+        "kss": "git://github.com/benogle/kss-node.git#master"
     },
     "devDependencies": {
         "grunt-cli": "~0.1.13",
