@@ -10,6 +10,13 @@
 
 module.exports = function(grunt) {
 
+    function addOptions(command, optionName, optionValues) {
+        optionValues = !optionValues || Array.isArray(optionValues) ? optionValues : [optionValues];
+        for (var i = 0; optionValues && i < optionValues.length; i++) {
+            command.push('--' + optionName, optionValues[i]);
+        }
+    }
+
     grunt.registerMultiTask('kss', 'Generate styleguide by KSS.', function() {
 
         var fs = require('fs'),
@@ -19,20 +26,19 @@ module.exports = function(grunt) {
 
         var kssCmd = ['node'],
             realPath = path.dirname(__filename).replace(/tasks$/g, ''),
-            sass = require(realPath + '/lib/sass'),
             dest = process.cwd();
 
         var opts = this.options({
             template: null,
-            includeType: null,
-            includePath: null,
-            mask: null,
-            scssRoot: []
+            include: null,
+            loadPath: null,
+            mask: null
         });
 
         kssCmd.push(realPath + 'node_modules/kss/bin/kss-node');
 
         this.files.forEach(function(file) {
+            console.log('Dirs!', file);
             kssCmd.push(file.src[0]);
             kssCmd.push(file.dest);
             dest = file.dest;
@@ -46,8 +52,14 @@ module.exports = function(grunt) {
             kssCmd.push('--mask', opts.mask);
         }
 
-        if (opts.includeType !== null && opts.includePath !== null) {
-            kssCmd.push('--' + opts.includeType, opts.includePath);
+        if (opts.loadPath !== null) {
+            addOptions(kssCmd, 'load-path', opts.loadPath);
+        }
+
+        if (opts.include !== null) {
+            for (var k in opts.include) {
+                addOptions(kssCmd, k, opts.include[k]);
+            }
         }
 
         var putInfo = function(error, result, code) {
