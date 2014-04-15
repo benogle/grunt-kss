@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         }
 
         if (opts.mask !== null) {
-            kssCmd.push('--mask', opts.mask);
+            kssCmd.push('--mask', '"' + opts.mask + '"');
         }
 
         if (opts.loadPath !== null) {
