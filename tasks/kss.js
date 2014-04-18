@@ -32,7 +32,8 @@ module.exports = function(grunt) {
             template: null,
             include: null,
             loadPath: null,
-            mask: null
+            mask: null,
+            markupTemplateDirectory: null
         });
 
         kssCmd.push(realPath + 'node_modules/kss/bin/kss-node');
@@ -50,6 +51,10 @@ module.exports = function(grunt) {
 
         if (opts.mask !== null) {
             kssCmd.push('--mask', '"' + opts.mask + '"');
+        }
+
+        if (opts.markupTemplateDirectory !== null) {
+            kssCmd.push('--markup-template-directory', '"' + opts.markupTemplateDirectory + '"');
         }
 
         if (opts.loadPath !== null) {
